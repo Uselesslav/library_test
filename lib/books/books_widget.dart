@@ -31,17 +31,22 @@ class _BooksPageState extends State<BooksPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: BlocBuilder<BooksBloc, BooksState>(
-      builder: (context, state) {
-        switch (state.runtimeType) {
-          case BooksUninitialized:
-            return _buildUninitializedState();
-            break;
-          case BooksLoaded:
-            return _buildLoadedState((state as BooksLoaded).books);
-            break;
-        }
-      },
-    ));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Library'),
+      ),
+      body: BlocBuilder<BooksBloc, BooksState>(
+        builder: (context, state) {
+          switch (state.runtimeType) {
+            case BooksUninitialized:
+              return _buildUninitializedState();
+              break;
+            case BooksLoaded:
+              return _buildLoadedState((state as BooksLoaded).books);
+              break;
+          }
+        },
+      ),
+    );
   }
 }
