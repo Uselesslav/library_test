@@ -6,8 +6,6 @@ import 'package:librarytest/books/books_bloc.dart';
 import 'package:librarytest/books/books_state.dart';
 
 class BooksPage extends StatefulWidget {
-  final String title = 'Books';
-
   @override
   _BooksPageState createState() => _BooksPageState();
 }
@@ -47,6 +45,41 @@ class _BooksPageState extends State<BooksPage> {
           }
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showBookAdditionDialog,
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),
     );
+  }
+
+  void _showBookAdditionDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Book addition'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Cancel'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          FlatButton(
+            child: Text('Add'),
+            onPressed: _addBook,
+          ),
+        ],
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(),
+            TextField(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _addBook() {
+    // TODO: To implement it
   }
 }
