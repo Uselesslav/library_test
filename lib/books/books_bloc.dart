@@ -20,14 +20,16 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     switch (state.runtimeType) {
       case BooksUninitialized:
         // TODO: Use real data
-        yield BooksLoaded([
-          Book('first book', 'description of the first book'),
-          Book('second book', 'description of the second book')
-        ]);
+        yield BooksLoaded(_loadBooks());
         break;
       case BooksLoaded:
-        yield state;
+        yield BooksLoaded(_loadBooks());
         break;
     }
   }
+
+  List<Book> _loadBooks() => [
+        Book('first book', 'description of the first book'),
+        Book('second book', 'description of the second book')
+      ];
 }
