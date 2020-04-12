@@ -29,11 +29,7 @@ class _BookAdditionPageState extends State<BookAdditionPage> {
         body: BlocBuilder<BookAdditionBloc, BookAdditionState>(
           builder: (context, state) {
             switch (state.runtimeType) {
-              case BookAdditionInput:
-                _bookAdditionNameTextEditingController.text =
-                    (state as BookAdditionInput).name;
-                _bookAdditionDescriptionTextEditingController.text =
-                    (state as BookAdditionInput).description;
+              case BookAdditionUninitialized:
                 _bookAdditionNameErrorText = null;
                 _bookAdditionDescriptionErrorText = null;
                 break;

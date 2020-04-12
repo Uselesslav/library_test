@@ -9,7 +9,7 @@ class BookAdditionBloc extends Bloc<BookAdditionEvent, BookAdditionState> {
   final BooksRepository _booksRepository;
 
   @override
-  BookAdditionState get initialState => BookAdditionInput('', '');
+  BookAdditionState get initialState => BookAdditionUninitialized();
 
   @override
   Stream<BookAdditionState> mapEventToState(BookAdditionEvent event) async* {
@@ -28,7 +28,7 @@ class BookAdditionBloc extends Bloc<BookAdditionEvent, BookAdditionState> {
     } else {
       await _addBookToList(add.name, add.description);
       add.onSuccess();
-      yield BookAdditionInput('', '');
+      yield BookAdditionUninitialized();
     }
   }
 
