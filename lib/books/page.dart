@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:librarytest/book_addition/bloc.dart';
 import 'package:librarytest/book_addition/page.dart';
 import 'package:librarytest/books/bloc.dart';
 import 'package:librarytest/books/book.dart';
@@ -12,9 +13,8 @@ class BooksPage extends StatefulWidget {
 }
 
 class _BooksPageState extends State<BooksPage> {
-  Widget _buildUninitializedState() => Center(
-        child: CircularProgressIndicator(),
-      );
+  Widget _buildUninitializedState() =>
+      Center(child: CircularProgressIndicator());
 
   Widget _buildLoadedState(List<Book> list) {
     if (list.isEmpty) {
@@ -46,12 +46,21 @@ class _BooksPageState extends State<BooksPage> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => BookAdditionPage())),
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: _getButtonAddBook(),
     );
   }
+
+  Widget _getButtonAddBook() => FloatingActionButton(
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              // TODO: Remove Fetch command from here
+              create: (context) => BookAdditionBloc(),
+              child: BookAdditionPage(),
+            ),
+          ),
+        ),
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      );
 }

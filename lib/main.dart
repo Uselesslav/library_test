@@ -11,12 +11,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: BlocProvider(
-          create: (context) => BooksBloc()..add(Fetch()),
-          child: BooksPage(),
-        ));
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: BlocProvider(
+        // TODO: Remove Fetch command from here
+        create: (context) => BooksBloc()..add(Fetch()),
+        child: BooksPage(),
+      ),
+    );
   }
 }

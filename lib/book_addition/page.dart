@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:librarytest/book_addition/bloc.dart';
+import 'package:librarytest/book_addition/event.dart';
+import 'package:librarytest/book_addition/state.dart';
 
 class BookAdditionPage extends StatefulWidget {
   @override
@@ -11,8 +15,10 @@ class _BookAdditionPageState extends State<BookAdditionPage> {
   final TextEditingController _bookAdditionDescriptionTextEditingController =
       TextEditingController();
   final FocusNode _bookAdditionDescriptionFocusNode = FocusNode();
-  final String _bookAdditionNameErrorText = null;
-  final String _bookAdditionDescriptionErrorText = null;
+  String _bookAdditionNameErrorText;
+  String _bookAdditionDescriptionErrorText;
+
+  BookAdditionBloc get _bookAdditionBloc => BlocProvider.of(context);
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -20,37 +26,67 @@ class _BookAdditionPageState extends State<BookAdditionPage> {
           title: Text('Book addition'),
           automaticallyImplyLeading: true,
         ),
-        body: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                  controller: _bookAdditionNameTextEditingController,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                      hintText: 'The name of the book',
-                      errorText: _bookAdditionNameErrorText),
-                  onSubmitted: (text) => FocusScope.of(context)
-                      .requestFocus(_bookAdditionDescriptionFocusNode)),
-              TextField(
-                  decoration: InputDecoration(
-                      hintText: 'Description of the book',
-                      errorText: _bookAdditionDescriptionErrorText),
-                  focusNode: _bookAdditionDescriptionFocusNode,
-                  controller: _bookAdditionDescriptionTextEditingController,
-                  textInputAction: TextInputAction.done),
-            ],
-          ),
+        body: BlocBuilder<BookAdditionBloc, BookAdditionState>(
+          builder: (context, state) {
+            switch (state.runtimeType) {
+              case BookAdditionInput:
+                _bookAdditionNameTextEditingController.text =
+                    (state as BookAdditionInput).name;
+                _bookAdditionDescriptionTextEditingController.text =
+                    (state as BookAdditionInput).description;
+                _bookAdditionNameErrorText = null;
+                _bookAdditionDescriptionErrorText = null;
+                break;
+              case BookAdditionInvalid:
+                if ((state as BookAdditionInvalid).bookNameIsNotValid) {
+                  _bookAdditionNameErrorText = 'Введите название';
+                } else {
+                  _bookAdditionNameErrorText = null;
+                }
+                if ((state as BookAdditionInvalid).bookDescriptionIsNotValid) {
+                  _bookAdditionDescriptionErrorText = 'Введите описание';
+                } else {
+                  _bookAdditionDescriptionErrorText = null;
+                }
+                break;
+            }
+
+            return Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                      controller: _bookAdditionNameTextEditingController,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                          hintText: 'The name of the book',
+                          errorText: _bookAdditionNameErrorText),
+                      onSubmitted: (text) => FocusScope.of(context)
+                          .requestFocus(_bookAdditionDescriptionFocusNode)),
+                  TextField(
+                      decoration: InputDecoration(
+                          hintText: 'Description of the book',
+                          errorText: _bookAdditionDescriptionErrorText),
+                      focusNode: _bookAdditionDescriptionFocusNode,
+                      controller: _bookAdditionDescriptionTextEditingController,
+                      textInputAction: TextInputAction.done),
+                ],
+              ),
+            );
+          },
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _addBook,
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
-        ),
+        floatingActionButton: _getAddBookWidget(),
       );
 
-  void _addBook() {
-    // TODO: To implement it
+  Widget _getAddBookWidget() => FloatingActionButton(
+        onPressed: () => _addBook(_bookAdditionNameTextEditingController.text,
+            _bookAdditionDescriptionTextEditingController.text),
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      );
+
+  void _addBook(String name, String description) {
+    _bookAdditionBloc.add(Add(name, description, () => Navigator.pop(context)));
   }
 }
