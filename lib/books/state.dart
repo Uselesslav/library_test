@@ -1,4 +1,4 @@
-import 'package:librarytest/books/book.dart';
+import 'package:librarytest/common/book.dart';
 
 abstract class BooksState {}
 

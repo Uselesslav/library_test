@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:librarytest/books/book.dart';
+import 'package:librarytest/common/book.dart';
 
 class BookWidget extends StatelessWidget {
   const BookWidget(this._book) : super();

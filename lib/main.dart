@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:librarytest/books/bloc.dart';
-import 'package:librarytest/books/event.dart';
+import 'package:librarytest/dependencies.dart';
 
-import 'books/page.dart';
+void main() {
+  GraphDependencies graphDependencies = GraphDependencies();
 
-void main() => runApp(MyApp());
+  runApp(App(graphDependencies.getBooksWidget()));
+}
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
+  App(this._homePageBuilder);
+
+  final WidgetBuilder _homePageBuilder;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BlocProvider(
-        // TODO: Remove Fetch command from here
-        create: (context) => BooksBloc()..add(Fetch()),
-        child: BooksPage(),
-      ),
+      home: Builder(builder: _homePageBuilder).build(context),
     );
   }
 }

@@ -1,9 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:librarytest/books/book.dart';
 import 'package:librarytest/books/event.dart';
 import 'package:librarytest/books/state.dart';
+import 'package:librarytest/common/book.dart';
+import 'package:librarytest/common/book_repository.dart';
 
 class BooksBloc extends Bloc<BooksEvent, BooksState> {
+  BooksBloc(this._booksRepository);
+
+  final BooksRepository _booksRepository;
+
   @override
   BooksState get initialState => BooksUninitialized();
 
@@ -19,17 +24,13 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   Stream<BooksState> _handleFetch(BooksState state) async* {
     switch (state.runtimeType) {
       case BooksUninitialized:
-        // TODO: Use real data
-        yield BooksLoaded(_loadBooks());
+        yield BooksLoaded(await _loadBooks());
         break;
       case BooksLoaded:
-        yield BooksLoaded(_loadBooks());
+        yield BooksLoaded(await _loadBooks());
         break;
     }
   }
 
-  List<Book> _loadBooks() => [
-        Book('first book', 'description of the first book'),
-        Book('second book', 'description of the second book')
-      ];
+  Future<List<Book>> _loadBooks() => _booksRepository.getList();
 }
