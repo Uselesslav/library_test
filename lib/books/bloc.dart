@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:librarytest/books/book.dart';
-import 'package:librarytest/books/books_event.dart';
-import 'package:librarytest/books/books_state.dart';
+import 'package:librarytest/books/event.dart';
+import 'package:librarytest/books/state.dart';
 
 class BooksBloc extends Bloc<BooksEvent, BooksState> {
   @override

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:librarytest/book_addition/book_addition_widget.dart';
+import 'package:librarytest/book_addition/page.dart';
+import 'package:librarytest/books/bloc.dart';
 import 'package:librarytest/books/book.dart';
 import 'package:librarytest/books/book_widget.dart';
-import 'package:librarytest/books/books_bloc.dart';
-import 'package:librarytest/books/books_state.dart';
+import 'package:librarytest/books/state.dart';
 
 class BooksPage extends StatefulWidget {
   @override

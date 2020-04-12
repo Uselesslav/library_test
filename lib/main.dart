@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:librarytest/books/books_bloc.dart';
-import 'package:librarytest/books/books_event.dart';
+import 'package:librarytest/books/bloc.dart';
+import 'package:librarytest/books/event.dart';
 
-import 'books/books_widget.dart';
+import 'books/page.dart';
 
 void main() => runApp(MyApp());
 
