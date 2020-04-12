@@ -26,9 +26,9 @@ class BookAdditionBloc extends Bloc<BookAdditionEvent, BookAdditionState> {
     if (nameIsEmpty || descriptionIsEmpty) {
       yield BookAdditionInvalid(nameIsEmpty, descriptionIsEmpty);
     } else {
+      yield BookAdditionLoading();
       await _addBookToList(add.name, add.description);
       add.onSuccess();
-      yield BookAdditionUninitialized();
     }
   }
 

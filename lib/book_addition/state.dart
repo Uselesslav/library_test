@@ -8,3 +8,5 @@ class BookAdditionInvalid extends BookAdditionState {
   final bool bookNameIsNotValid;
   final bool bookDescriptionIsNotValid;
 }
+
+class BookAdditionLoading extends BookAdditionState {}

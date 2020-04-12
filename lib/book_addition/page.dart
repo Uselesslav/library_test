@@ -32,6 +32,7 @@ class _BookAdditionPageState extends State<BookAdditionPage> {
               case BookAdditionUninitialized:
                 _bookAdditionNameErrorText = null;
                 _bookAdditionDescriptionErrorText = null;
+                return _getBookAdditionWidget();
                 break;
               case BookAdditionInvalid:
                 if ((state as BookAdditionInvalid).bookNameIsNotValid) {
@@ -44,35 +45,39 @@ class _BookAdditionPageState extends State<BookAdditionPage> {
                 } else {
                   _bookAdditionDescriptionErrorText = null;
                 }
+                return _getBookAdditionWidget();
+                break;
+              case BookAdditionLoading:
+                return Center(child: CircularProgressIndicator());
                 break;
             }
-
-            return Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                      controller: _bookAdditionNameTextEditingController,
-                      autofocus: true,
-                      decoration: InputDecoration(
-                          hintText: 'The name of the book',
-                          errorText: _bookAdditionNameErrorText),
-                      onSubmitted: (text) => FocusScope.of(context)
-                          .requestFocus(_bookAdditionDescriptionFocusNode)),
-                  TextField(
-                      decoration: InputDecoration(
-                          hintText: 'Description of the book',
-                          errorText: _bookAdditionDescriptionErrorText),
-                      focusNode: _bookAdditionDescriptionFocusNode,
-                      controller: _bookAdditionDescriptionTextEditingController,
-                      textInputAction: TextInputAction.done),
-                ],
-              ),
-            );
           },
         ),
         floatingActionButton: _getAddBookWidget(),
+      );
+
+  Widget _getBookAdditionWidget() => Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+                controller: _bookAdditionNameTextEditingController,
+                autofocus: true,
+                decoration: InputDecoration(
+                    hintText: 'The name of the book',
+                    errorText: _bookAdditionNameErrorText),
+                onSubmitted: (text) => FocusScope.of(context)
+                    .requestFocus(_bookAdditionDescriptionFocusNode)),
+            TextField(
+                decoration: InputDecoration(
+                    hintText: 'Description of the book',
+                    errorText: _bookAdditionDescriptionErrorText),
+                focusNode: _bookAdditionDescriptionFocusNode,
+                controller: _bookAdditionDescriptionTextEditingController,
+                textInputAction: TextInputAction.done),
+          ],
+        ),
       );
 
   Widget _getAddBookWidget() => FloatingActionButton(
