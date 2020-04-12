@@ -32,7 +32,6 @@ class BookAdditionBloc extends Bloc<BookAdditionEvent, BookAdditionState> {
     }
   }
 
-  Future<void> _addBookToList(String name, String description) {
-    return _booksRepository.addBook(name, description);
-  }
+  Future<void> _addBookToList(String name, String description) =>
+      _booksRepository.addBook(name, description);
 }

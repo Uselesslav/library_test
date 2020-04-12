@@ -36,12 +36,12 @@ class _BookAdditionPageState extends State<BookAdditionPage> {
                 break;
               case BookAdditionInvalid:
                 if ((state as BookAdditionInvalid).bookNameIsNotValid) {
-                  _bookAdditionNameErrorText = 'Введите название';
+                  _bookAdditionNameErrorText = 'Enter a name!';
                 } else {
                   _bookAdditionNameErrorText = null;
                 }
                 if ((state as BookAdditionInvalid).bookDescriptionIsNotValid) {
-                  _bookAdditionDescriptionErrorText = 'Введите описание';
+                  _bookAdditionDescriptionErrorText = 'Enter a description!';
                 } else {
                   _bookAdditionDescriptionErrorText = null;
                 }
